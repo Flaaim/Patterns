@@ -13,6 +13,6 @@ class LoggerNotifier implements \SplObserver
         echo "Запись в лог: ".
             (new \DateTimeImmutable())->format('d.m.Y H:i:s') .
             " - Заказ #" . $subject->getId() .
-            ': '. $subject->getStatus() . PHP_EOL;
+            ': '. $subject->getStatus()->getValue() . PHP_EOL;
     }
 }

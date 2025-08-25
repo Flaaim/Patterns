@@ -11,6 +11,6 @@ class EmailNotifier implements \SplObserver
     {
         /** @var Order $subject */
         echo "Email отправлен на client@example.com: Заказ #" .
-            $subject->getId(). ' сменил статус на: ' . $subject->getStatus(). PHP_EOL;
+            $subject->getId(). ' сменил статус на: ' . $subject->getStatus()->getValue(). PHP_EOL;
     }
 }

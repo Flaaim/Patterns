@@ -6,6 +6,7 @@ use App\Observer\Notifiers\EmailNotifier;
 use App\Observer\Notifiers\LoggerNotifier;
 use App\Observer\Notifiers\SmsNotifier;
 use App\Observer\Order;
+use App\Observer\Status;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,7 +25,7 @@ class OrderCommand extends Command
         $order = new Order(
             1,
             'Доставка пиццы',
-            'Создан',
+            Status::new(),
             new \DateTimeImmutable(),
         );
         $emailNotifier = new EmailNotifier();
@@ -35,8 +36,9 @@ class OrderCommand extends Command
         $order->attach($smsNotifier);
         $order->attach($loggerNotifier);
 
-        $order->setStatus('в обработке');
-        $order->setStatus('отправлен');
+        $order->setStatus(Status::processing());
+        $order->setStatus(Status::send());
+
         return self::SUCCESS;
     }
 }

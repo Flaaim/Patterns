@@ -9,11 +9,11 @@ class Order implements \SplSubject
 {
     private int $id;
     private string $name;
-    private string $status;
+    private Status $status;
     private DateTimeImmutable $date;
 
     private SplObjectStorage $observers;
-    public function __construct(int $id, string $name, string $status, DateTimeImmutable $date)
+    public function __construct(int $id, string $name, Status $status, DateTimeImmutable $date)
     {
         $this->id = $id;
         $this->name = $name;
@@ -31,13 +31,21 @@ class Order implements \SplSubject
     {
         return $this->name;
     }
-    public function getStatus(): string
+    public function getStatus(): Status
     {
         return $this->status;
     }
-    public function setStatus(string $status): void
+    public function setStatus(Status $newStatus): void
     {
-        $this->status = $status;
+        if($newStatus === $this->status) {
+            throw new \DomainException('Status already set');
+        }
+        $clone = clone $this;
+        $this->status = $newStatus;
+        $this->status->notify(
+            $clone->getStatus()->getValue(),
+            $this->status->getValue()
+        );
         $this->notify();
     }
     public function getDate(): DateTimeImmutable
@@ -58,11 +66,9 @@ class Order implements \SplSubject
 
     public function notify(): void
     {
-        echo "Статус заказа изменен: новый статус -> ". $this->getStatus(). PHP_EOL;
         foreach($this->observers as $observer) {
             /** @var \SplObserver $observer */
             $observer->update($this);
         }
-        echo "----". PHP_EOL;
     }
 }
