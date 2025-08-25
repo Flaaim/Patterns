@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Observer\Notifiers\DatabaseNotifier;
 use App\Observer\Notifiers\EmailNotifier;
 use App\Observer\Notifiers\LoggerNotifier;
 use App\Observer\Notifiers\SmsNotifier;
@@ -31,10 +32,14 @@ class OrderCommand extends Command
         $emailNotifier = new EmailNotifier();
         $smsNotifier = new SmsNotifier();
         $loggerNotifier = new LoggerNotifier();
+        $dbNotifier = new DatabaseNotifier();
+
         echo "Подписываем наблюдателей:". PHP_EOL;
+
         $order->attach($emailNotifier);
         $order->attach($smsNotifier);
         $order->attach($loggerNotifier);
+        $order->attach($dbNotifier);
 
         $order->setStatus(Status::processing());
         $order->setStatus(Status::send());
