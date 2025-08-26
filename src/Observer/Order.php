@@ -37,7 +37,7 @@ class Order implements \SplSubject
     }
     public function setStatus(Status $newStatus): void
     {
-        if($newStatus === $this->status) {
+        if($newStatus->getValue() === $this->status->getValue()) {
             throw new \DomainException('Status already set');
         }
         $clone = clone $this;
@@ -66,9 +66,26 @@ class Order implements \SplSubject
 
     public function notify(): void
     {
+        //
+        $this->sortPriority();
         foreach($this->observers as $observer) {
             /** @var \SplObserver $observer */
             $observer->update($this);
+        }
+    }
+
+    public function sortPriority(): void
+    {
+        $objectsToSort = [];
+        foreach ($this->observers as $object) {
+            $objectsToSort[] = $object;
+        }
+        usort($objectsToSort, function ($a, $b) {
+            return $a->getPriority() <=> $b->getPriority();
+        });
+        $this->observers = new SplObjectStorage();
+        foreach ($objectsToSort as $object) {
+            $this->observers->attach($object);
         }
     }
 }

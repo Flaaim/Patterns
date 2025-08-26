@@ -7,6 +7,7 @@ use SplSubject;
 
 class LoggerNotifier implements \SplObserver
 {
+    private int $priority = 50;
     public function update(SplSubject $subject): void
     {
         /** @var Order $subject */
@@ -14,5 +15,9 @@ class LoggerNotifier implements \SplObserver
             (new \DateTimeImmutable())->format('d.m.Y H:i:s') .
             " - Заказ #" . $subject->getId() .
             ': '. $subject->getStatus()->getValue() . PHP_EOL;
+    }
+    public function getPriority(): int
+    {
+        return $this->priority;
     }
 }
