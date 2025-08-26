@@ -11,15 +11,17 @@ class Order implements \SplSubject
     private string $name;
     private Status $status;
     private DateTimeImmutable $date;
+    private Sorting $sorting;
 
     private SplObjectStorage $observers;
-    public function __construct(int $id, string $name, Status $status, DateTimeImmutable $date)
+    public function __construct(int $id, string $name, Status $status, DateTimeImmutable $date, SplObjectStorage $observers, Sorting $sorting)
     {
         $this->id = $id;
         $this->name = $name;
         $this->status = $status;
         $this->date = $date;
-        $this->observers = new SplObjectStorage();
+        $this->observers = $observers;
+        $this->sorting = $sorting;
     }
 
     public function getId(): int
@@ -66,25 +68,17 @@ class Order implements \SplSubject
 
     public function notify(): void
     {
-        //
         $this->sortPriority();
         foreach($this->observers as $observer) {
             /** @var \SplObserver $observer */
             $observer->update($this);
         }
     }
-
-    public function sortPriority(): void
+    public function sortPriority(bool $asc = false): void
     {
-        $objectsToSort = [];
-        foreach ($this->observers as $object) {
-            $objectsToSort[] = $object;
-        }
-        usort($objectsToSort, function ($a, $b) {
-            return $a->getPriority() <=> $b->getPriority();
-        });
+        $sortedObjects = $this->sorting->sortByPriority($this->observers, $asc);
         $this->observers = new SplObjectStorage();
-        foreach ($objectsToSort as $object) {
+        foreach ($sortedObjects as $object) {
             $this->observers->attach($object);
         }
     }
