@@ -47,8 +47,6 @@ class OrderCommand extends Command
 
         $order->setStatus(Status::processing());
 
-        $order->detach($emailNotifier);
-
         $order->setStatus(Status::send());
 
 

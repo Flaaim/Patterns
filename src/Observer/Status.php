@@ -4,10 +4,12 @@ namespace App\Observer;
 
 class Status
 {
-    public const NEW = 'Создан';
-    public const PROCESSING = 'В обработке';
-    public const SEND = 'Отправлен';
-    public const COMPLETED = 'Завершен';
+    public const STATUSES = [
+        'new' => 'Создан',
+        'processing' => 'В обработке',
+        'send' => 'Отправлен',
+        'completed' => 'Завершен'
+    ];
     private string $value;
     private function __construct(string $value)
     {
@@ -15,19 +17,19 @@ class Status
     }
     public static function new(): self
     {
-        return new self(self::NEW);
+        return new self(self::STATUSES['new']);
     }
     public static function processing(): self
     {
-        return new self(self::PROCESSING);
+        return new self(self::STATUSES['processing']);
     }
     public static function send(): self
     {
-        return new self(self::SEND);
+        return new self(self::STATUSES['send']);
     }
     public function completed(): self
     {
-        return new self(self::COMPLETED);
+        return new self(self::STATUSES['completed']);
     }
     public function getValue(): string
     {
