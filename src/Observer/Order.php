@@ -2,6 +2,7 @@
 
 namespace App\Observer;
 
+use App\Observer\Service\Sorting;
 use DateTimeImmutable;
 use SplObjectStorage;
 
