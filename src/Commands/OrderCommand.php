@@ -7,7 +7,6 @@ use App\Observer\Notifiers\EmailNotifier;
 use App\Observer\Notifiers\LoggerNotifier;
 use App\Observer\Notifiers\SmsNotifier;
 use App\Observer\Order;
-use App\Observer\Priority;
 use App\Observer\Service\Sorting;
 use App\Observer\Status;
 use Symfony\Component\Console\Command\Command;
