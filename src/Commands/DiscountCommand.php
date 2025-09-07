@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DiscountCommand extends Command
 {
-    public function configure()
+    public function configure(): void
     {
         $this->setName('discount');
         $this->setDescription('Discount system decorator');
