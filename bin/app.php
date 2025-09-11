@@ -7,6 +7,7 @@ declare(strict_types=1);
 require __DIR__. '/../vendor/autoload.php';
 
 use App\Commands\AdapterCommand;
+use App\Commands\AdapterPaymentCommand;
 use App\Commands\DiscountCommand;
 use App\Commands\LoggerCommand;
 use App\Commands\OrderCommand;
@@ -19,6 +20,7 @@ $application->add(new OrderCommand());
 $application->add(new TextCommand());
 $application->add(new DiscountCommand());
 $application->add(new LoggerCommand());
-$application->add(new AdapterCommand());
+$application->add(new AdapterPaymentCommand());
+$application->add(new AdapterCacheCommand());
 
 $application->run();

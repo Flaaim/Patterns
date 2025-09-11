@@ -2,12 +2,13 @@
 
 namespace App\Commands;
 
-use App\Adapter\LegacyPaymentSystem;
-use App\Adapter\PaymentAdapter;
+use App\Adapter\PaymentSystem\LegacyPaymentSystem;
+use App\Adapter\PaymentSystem\PaymentAdapter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-class AdapterCommand extends Command
+
+class AdapterPaymentCommand extends Command
 {
     public function configure(): void
     {
