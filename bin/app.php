@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 require __DIR__. '/../vendor/autoload.php';
 
-use App\Commands\AdapterCommand;
+use App\Commands\AdapterCacheCommand;
 use App\Commands\AdapterPaymentCommand;
 use App\Commands\DiscountCommand;
 use App\Commands\LoggerCommand;
